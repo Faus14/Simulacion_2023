@@ -21,7 +21,7 @@ desvio = np.arange(0, 37).std()  # Desviación Estándar
 varianza = np.arange(0, 37).var()  # Varianza
 
 t = 1500  # número de tiradas
-c = 1  # número de corridas
+c = 30  # número de corridas
 nroEvaluar = 7  # np.random.randint(0,37)
 
 
@@ -41,9 +41,6 @@ for i in range(0, c):
         desvios[i][n] = lista.std()
         varianzas[i][n] = lista.var()
 
-
-
-
 # Graficos
 
 #Frecuencia Relativa - Grafico
@@ -55,7 +52,7 @@ for i in range(0, c):
     axs.plot(range(1, t+1), frecuencias[i])
 axs.axhline(y=frecuencia, color='red', linestyle='-',
                   label='fre: '+str(round(frecuencia, 3)))
-fig.savefig('FRelativa.png')
+fig.savefig(f'FRelativa-C{c}-T{t}.png')
 plt.show()
 
 #Valor promedio - Grafico
@@ -68,13 +65,13 @@ for i in range(0, c):
     axs.plot(range(1, t+1), medias[i])
 axs.axhline(y=esperanza, color='red', linestyle='-',
                   label='vpe: '+str(round(esperanza, 3)))
-fig.savefig('VPromedio.png')
+fig.savefig(f'VPromedio-C{c}-T{t}.png')
 plt.show()
 
 
 #Valor del desvio - Grafico
 fig, axs = plt.subplots()
-axs.set_title('Valor del Desvío (vd)')
+axs.set_title(f'Valor del Desvío (vd)')
 axs.set(xlabel='Tiradas', ylabel='Valor del Desvío (vd)')
 axs.set_ylim(bottom=0, top=max(np.amax(desvios), desvio)+1)
 for i in range(0, c):
@@ -82,13 +79,12 @@ for i in range(0, c):
     axs.plot(range(1, t+1), desvios[i])
 axs.axhline(y=desvio, color='red', linestyle='-',
                   label='vde: '+str(round(desvio, 3)))
-
-fig.savefig('Desvio.png')
+fig.savefig('Desvio-C{c}-T{t}.png')
 plt.show()
 
 #Varianza
 fig, axs = plt.subplots()
-axs.set_title('Valor de la Varianza (vve)')
+axs.set_title(f'Valor de la Varianza (vve)')
 axs.set(xlabel='Tiradas', ylabel='Valor de la Varianza (vv)')
 axs.set_ylim(bottom=0, top=max(np.amax(varianzas), varianza)+10)
 for i in range(0, c):
@@ -96,6 +92,5 @@ for i in range(0, c):
     axs.plot(range(1, t+1), varianzas[i])
 axs.axhline(y=varianza, color='red', linestyle='-',
                   label='vve: '+str(round(varianza, 3)))
-
-fig.savefig('Varianza.png')
+fig.savefig(f'Varianza-C{c}-T{t}.png')
 plt.show()
