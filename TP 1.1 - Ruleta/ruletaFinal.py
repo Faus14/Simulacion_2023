@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+RUTA = 'TP 1.1 - Ruleta'
 plt.style.use('Solarize_Light2')
 
 # TP 1.1 Simulación de Una Ruleta
@@ -20,7 +21,7 @@ esperanza = np.arange(0, 37).mean()  # Media aritmética
 desvio = np.arange(0, 37).std()  # Desviación Estándar
 varianza = np.arange(0, 37).var()  # Varianza
 
-t = 1500  # número de tiradas
+t = 1  # número de tiradas
 c = 15  # número de corridas
 nroEvaluar = 7  # np.random.randint(0,37)
 
@@ -52,7 +53,7 @@ for i in range(0, c):
     axs.plot(range(1, t+1), frecuencias[i])
 axs.axhline(y=frecuencia, color='red', linestyle='-',
                   label='fre: '+str(round(frecuencia, 3)))
-fig.savefig(f'FRelativa-C{c}-T{t}.png')
+fig.savefig(f'{RUTA}/FRelativa-C{c}-T{t}.png')
 plt.show()
 
 #Valor promedio - Grafico
@@ -65,7 +66,7 @@ for i in range(0, c):
     axs.plot(range(1, t+1), medias[i])
 axs.axhline(y=esperanza, color='red', linestyle='-',
                   label='vpe: '+str(round(esperanza, 3)))
-fig.savefig(f'VPromedio-C{c}-T{t}.png')
+fig.savefig(f'{RUTA}/VPromedio-C{c}-T{t}.png')
 plt.show()
 
 
@@ -79,7 +80,7 @@ for i in range(0, c):
     axs.plot(range(1, t+1), desvios[i])
 axs.axhline(y=desvio, color='red', linestyle='-',
                   label='vde: '+str(round(desvio, 3)))
-fig.savefig('Desvio-C{c}-T{t}.png')
+fig.savefig(f'{RUTA}/Desvio-C{c}-T{t}.png')
 plt.show()
 
 #Varianza
@@ -92,5 +93,5 @@ for i in range(0, c):
     axs.plot(range(1, t+1), varianzas[i])
 axs.axhline(y=varianza, color='red', linestyle='-',
                   label='vve: '+str(round(varianza, 3)))
-fig.savefig(f'Varianza-C{c}-T{t}.png')
+fig.savefig(f'{RUTA}/Varianza-C{c}-T{t}.png')
 plt.show()
