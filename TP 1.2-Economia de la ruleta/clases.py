@@ -48,11 +48,11 @@ class Jugador:
                 self.prox_apuesta = "negro"
 
     def gana_apuesta(self, num: int) -> bool:
-        result=  (num % 2 == 0 and self.prox_apuesta == "par") or (num % 2 != 0 and self.prox_apuesta == "impar") or (
+        result = (num % 2 == 0 and self.prox_apuesta == "par") or (num % 2 != 0 and self.prox_apuesta == "impar") or (
             num in negros and self.prox_apuesta == "negro") or (num in rojos and self.prox_apuesta == "rojo") or (
             num in range(1, 19) and self.prox_apuesta == "[1-18]") or (num in range(19, 37) and self.prox_apuesta == "[19-36]")
         if result:
-            self.victorias+=1
+            self.victorias += 1
         return result
 
 
@@ -69,7 +69,8 @@ class JugadorMG(Jugador):
     def preparar_apuesta(self) -> None:
         """Se selecciona el monto a apostar"""
         apuesta = self.apuesta_0*(2**self.juegos_perdidos)
-        if not(self.cap_acotado and apuesta > self.capital):
+        if not (self.cap_acotado and apuesta > self.capital):
+            # capital no acotado o apuesta preestablecida menor o igual a capital
             self.monto_prox_apuesta = apuesta
         elif self.capital >= apuesta_minima:
             # se abandona temporalmente el sistema cuando ya no se posee el monto indicado por martingala
@@ -103,7 +104,7 @@ class JugadorParoli(Jugador):
         if self.racha_positiva == 3:
             self.racha_positiva = 0
         apuesta = self.apuesta_0*(2**self.racha_positiva)
-        if not(self.cap_acotado and apuesta > self.capital):
+        if not (self.cap_acotado and apuesta > self.capital):
             self.monto_prox_apuesta = apuesta
         elif self.capital >= apuesta_minima:
             # se abandona temporalmente el sistema cuando ya no se posee el monto indicado por Paroli
@@ -117,12 +118,13 @@ class JugadorParoli(Jugador):
         self.preparar_apuesta()
         if self.monto_prox_apuesta != 0:
             if self.gana_apuesta(num):
-                
+
                 self.capital += self.monto_prox_apuesta
-                self.racha_positiva += 1                         
+                self.racha_positiva += 1
             else:
                 self.capital -= self.monto_prox_apuesta
                 self.racha_positiva = 0
+
 
 class JugadorColumnas(Jugador):
     """Jugadores que apuestan a todas las columnas"""
@@ -149,7 +151,7 @@ class JugadorColumnas(Jugador):
                 return
         if num in JugadorColumnas.cols[idxmax]:
             self.capital += self.maxima*3
-            
+
         else:
             self.capital -= self.maxima
 
@@ -177,45 +179,26 @@ class JugadorDalembert(Jugador):
         """La apuesta inicial es por defecto la minima"""
         super().__init__(capital, apuesta_ini, cap_acotado)
         self.monto_prox_apuesta = apuesta_minima
-        self.apostar()  
+        self.apostar()
 
     def jugar(self, num: int) -> None:
-        if (self.cap_acotado): 
-            if (self.monto_prox_apuesta<=self.capital):
+        if (self.cap_acotado):
+            if (self.monto_prox_apuesta <= self.capital):
+                # se apuesta el metodo establecido por el metodo cuando hay capital
                 apuesta = self.monto_prox_apuesta
-            else: 
-                apuesta = self.capital
-            if apuesta != 0:
-                if self.gana_apuesta(num):
-                    self.capital += apuesta
-                    self.monto_prox_apuesta -= 1 
-                    self.apostar()  # se cambia el elemento a apostar
-                else:
-                    self.capital -= apuesta
-                    self.monto_prox_apuesta += 1   
-                
-        else:
-            apuesta = self.monto_prox_apuesta
-                       
-    def preparar_apuesta(self) -> None:
-        """Se selecciona el monto a apostar"""
-        apuesta = self.apuesta_0
-        if not(self.cap_acotado and apuesta > self.capital):
-            self.monto_prox_apuesta = apuesta
-        elif self.capital >= apuesta_minima:
-            # se abandona temporalmente el sistema cuando ya no se posee el monto indicado por martingala
-            self.monto_prox_apuesta = self.capital  # y se apuesta lo que se tiene
-        else:
-            self.monto_prox_apuesta = 0   # se deja de apostar cuando el capital se termina
-
-    def jugar(self, num: int) -> None:
-        self.preparar_apuesta()
-        if self.monto_prox_apuesta != 0:
-            if self.gana_apuesta(num):
-                self.capital += self.monto_prox_apuesta
-                self.juegos_perdidos = 0  # se reinicia el martingala
-                self.apostar()  # se cambia el elemento a apostar
             else:
-                self.capital -= self.monto_prox_apuesta
-                self.juegos_perdidos += 1
-    
+                # se apuesta el capital restante cuando no se posee lo suficiente para respetar el metodo
+                apuesta = self.capital
+        else:
+            # el capital es infinito y se puede apostar segun el metodo
+            apuesta = self.monto_prox_apuesta
+
+        if (self.gana_apuesta(num)):
+            self.capital -= apuesta
+            if (self.monto_prox_apuesta > apuesta_minima):
+                # se reduce el monto a apostar la siguiente ronda siempre que no sea menor que la minima
+                self.monto_prox_apuesta -= 1
+            self.apostar()  # se cambia el elemento a apostar
+        else:
+            self.capital -= apuesta
+            self.monto_prox_apuesta += 1
