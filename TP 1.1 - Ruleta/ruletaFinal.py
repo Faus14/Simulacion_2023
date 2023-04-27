@@ -21,7 +21,7 @@ esperanza = np.arange(0, 37).mean()  # Media aritmética
 desvio = np.arange(0, 37).std()  # Desviación Estándar
 varianza = np.arange(0, 37).var()  # Varianza
 
-t = 1  # número de tiradas
+t = 1500  # número de tiradas
 c = 15  # número de corridas
 nroEvaluar = 7  # np.random.randint(0,37)
 

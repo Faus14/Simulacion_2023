@@ -1,11 +1,12 @@
-from clases import Jugador, JugadorFibonacci, negros, rojos, randint, apuesta_minima, JugadorMG, JugadorParoli, JugadorGuetting, JugadorColumnas
+from clases import Jugador,randint,JugadorMG, JugadorParoli, JugadorColumnas, JugadorDalembert,apuesta_minima,negros,rojos
+
 from matplotlib import pyplot as plt
 plt.style.use('ggplot')
 
 
 def graficoDineroUnicaTirada(resultados: list, capAcotado: float, metodo: str) -> None:
     plt.title(
-        f"Flujo de dinero de una corrida en 'n' tiradas-{metodo}", fontsize=25)
+        f"Flujo de dinero de una corrida en 'n' tiradas-{metodo}", fontsize=10)
     plt.axhline(capAcotado, color='k', ls="solid")
     plt.plot(resultados, linewidth=1.2)
     plt.xlabel("Número de tiradas 'n'", fontsize=25)
@@ -22,8 +23,9 @@ def graficoDineroUnicaTirada(resultados: list, capAcotado: float, metodo: str) -
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
     plt.ioff()
-    plt.show()
-
+    plt.savefig(f"Flujo-{metodo}.png")
+    plt.clf()
+    
 
 def graficoDineroTiradasMultiples(resultados: list, capAcotado: float, corridas: int, metodo: str) -> None:
     for i in range(corridas):
@@ -50,7 +52,8 @@ def graficoDineroTiradasMultiples(resultados: list, capAcotado: float, corridas:
         plt.yticks(fontsize=20)
         #plt.legend((dineroIni,), loc="best")
         plt.ioff()
-    plt.show()
+        plt.savefig(f"FlujoMultiple-{metodo}.png")
+    plt.clf()
 
 
 def graficaFrecFavorable(frecuencias: list, title1: str) -> None:
@@ -62,7 +65,8 @@ def graficaFrecFavorable(frecuencias: list, title1: str) -> None:
     plt.xlabel('Cantidad de tiradas "n"', fontsize=25)
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
-    plt.show()
+    plt.savefig(f"FrecFav-{title1}.png")
+    plt.clf()
 
 
 def tirada() -> int:
@@ -106,7 +110,7 @@ def ejecutar(clase: Jugador, metodo: str, capital_acotado: bool = False):
             n = tirada()
             victorias_antes = jugador.victorias
             jugador.jugar(n)
-            victoria_n = jugador.victorias-victorias_antes
+            victoria_n = jugador.victorias - victorias_antes
             if victoria_n >= 1:
                 vic[i-ultima_victoria] += 1
                 ultima_victoria = i+1
@@ -120,21 +124,21 @@ def ejecutar(clase: Jugador, metodo: str, capital_acotado: bool = False):
     graficoDineroTiradasMultiples(resultados, capAcotado, 100, metodo)
 
 
-ejecutar(clase=JugadorMG, metodo="Sin restricciones de capital",
-         capital_acotado=False)
-ejecutar(clase=JugadorMG, metodo="Con capital acotado", capital_acotado=True)
+# ejecutar(clase=JugadorMG, metodo="Martingala - Sin restricciones de capital",
+#          capital_acotado=False)
+# ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado", capital_acotado=True)
 
-ejecutar(clase=JugadorFibonacci,
-         metodo="Sin restricciones de capital", capital_acotado=False)
-ejecutar(clase=JugadorFibonacci,
-         metodo="Con capital acotado", capital_acotado=True)
+# ejecutar(clase=JugadorParoli,
+#          metodo="Paroli - Sin restricciones de capital", capital_acotado=False)
+# ejecutar(clase=JugadorParoli,
+#          metodo="Paroli - Con capital acotado", capital_acotado=True)
 
-ejecutar(clase=JugadorGuetting,
-         metodo="Sin restricciones de capital", capital_acotado=False)
-ejecutar(clase=JugadorGuetting,
-         metodo="Con capital acotado", capital_acotado=True)
+# ejecutar(clase=JugadorColumnas,
+#          metodo="Columnas - Sin restricciones de capital", capital_acotado=False)
+# ejecutar(clase=JugadorColumnas,
+#          metodo="Columnas - Con capital acotado", capital_acotado=True)
 
-ejecutar(clase=JugadorColumnas,
-         metodo="Sin restricciones de capital", capital_acotado=False)
-ejecutar(clase=JugadorColumnas,
-         metodo="Con capital acotado", capital_acotado=True)
+ejecutar(clase=JugadorDalembert,
+         metodo="Dalembert - Sin restricciones de capital", capital_acotado=False)
+ejecutar(clase=JugadorDalembert,
+         metodo="Dalembert - Con capital acotado", capital_acotado=True)
