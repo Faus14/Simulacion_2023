@@ -30,7 +30,7 @@ def graficoDineroUnicaTirada(resultados: list, capAcotado: float, metodo: str) -
 def graficoDineroTiradasMultiples(resultados: list, capAcotado: float, corridas: int, metodo: str) -> None:
     for i in range(corridas):
         plt.title(
-            f"Flujo de dinero de {corridas} corridas \n  respecto a 'n' tiradas - \n {metodo}")
+            f"Flujo de dinero de {corridas} corridas respecto a 'n' tiradas - \n {metodo}")
         plt.axhline(capAcotado, color='k', ls="solid")
         plt.axhline(capAcotado * 1.5, color='c', ls="-", linewidth=0.8)
         plt.axhline(capAcotado * 0.5, color='r', ls="-")
@@ -58,7 +58,7 @@ def graficoDineroTiradasMultiples(resultados: list, capAcotado: float, corridas:
 
 def graficaFrecFavorable(frecuencias: list, title1: str) -> None:
     plt.title(
-        f"Frecuencia relativa de obtener \n  una apuesta favorable segun 'n'\n  {title1}")
+        f"Frecuencia relativa de obtener una \n  apuesta favorable segun 'n' {title1}")
     plt.bar(range(0, len(frecuencias)), frecuencias)
     plt.ylabel('Frecuencia relativa')
     plt.ylim(0, max(frecuencias))
@@ -73,10 +73,10 @@ def tirada() -> int:
     return randint(0, 36)
 
 
-valorApuesta = 1  # Valor de la apuesta
-capAcotado = 140  # Capital acotado
+valorApuesta = 5  # Valor de la apuesta
+capAcotado = 100  # Capital acotado
 
-t = 50  # número de tiradas
+t = 100  # número de tiradas
 c = 10  # número de corridas
 
 
@@ -123,16 +123,16 @@ def ejecutar(clase: Jugador, metodo: str, capital_acotado: bool = False):
     graficoDineroTiradasMultiples(resultados, capAcotado, c, metodo)
 
 
-ejecutar(clase=JugadorMG, metodo="Martingala - Sin restricciones de capital",
+ejecutar(clase=JugadorMG, metodo="Martingala - Capital Infinito",
          capital_acotado=False)
-ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado",
+ejecutar(clase=JugadorMG, metodo="Martingala - Capital acotado",
          capital_acotado=True)
 
-# ejecutar(clase=JugadorParoli,
-#          metodo="Paroli - Sin restricciones de capital", capital_acotado=False)
-# ejecutar(clase=JugadorParoli,
-#          metodo="Paroli - Con capital acotado", capital_acotado=True)
-
+""" ejecutar(clase=JugadorParoli,
+         metodo="Paroli - Sin restricciones de capital", capital_acotado=False)
+ejecutar(clase=JugadorParoli,
+         metodo="Paroli - Con capital acotado", capital_acotado=True)
+ """
 # ejecutar(clase=JugadorColumnas,
 #          metodo="Columnas - Sin restricciones de capital", capital_acotado=False)
 # ejecutar(clase=JugadorColumnas,
