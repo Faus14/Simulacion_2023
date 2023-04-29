@@ -24,6 +24,7 @@ class Jugador:
         self.apuesta_0 = apuesta_ini
         self.victorias = 0
         self.cap_acotado = cap_acotado
+        self.victorias = 0
 
     def apostar(self) -> None:
         """Se selecciona una tipo de apuesta entre par/impar, rojo/negro o primeros 18/ultimos 18"""
@@ -137,6 +138,7 @@ class JugadorColumnas(Jugador):
         self.minima = apuesta_ini
         self.media = self.minima*2
         self.maxima = self.media*2
+        self.victorias = 0
 
     def jugar(self, num: int) -> None:
         """Establece a que columna se apuesta el minimo, a cual el doble(medio),
@@ -151,7 +153,7 @@ class JugadorColumnas(Jugador):
                 return
         if num in JugadorColumnas.cols[idxmax]:
             self.capital += self.maxima*3
-
+            self.victorias += 1
         else:
             self.capital -= self.maxima
 
@@ -172,7 +174,7 @@ class JugadorColumnas(Jugador):
 
 
 class JugadorDalembert(Jugador):
-    """Jugadores que siguen metodo martingala. 
+    """Jugadores que siguen metodo Dalembert 50-50. 
     Cada apuesta seguira aleatoriamente negro/rojo o [1-18]/[19-36] o par/impar"""
 
     def __init__(self, capital: float = 0, apuesta_ini: float = apuesta_minima, cap_acotado: bool = False) -> None:
@@ -180,6 +182,50 @@ class JugadorDalembert(Jugador):
         super().__init__(capital, apuesta_ini, cap_acotado)
         self.monto_prox_apuesta = apuesta_minima
         self.apostar()
+
+    def jugar(self, num: int) -> None:
+        if (self.cap_acotado):
+            if (self.monto_prox_apuesta <= self.capital):
+                # se apuesta el metodo establecido por el metodo cuando hay capital
+                apuesta = self.monto_prox_apuesta
+            else:
+                # se apuesta el capital restante cuando no se posee lo suficiente para respetar el metodo
+                apuesta = self.capital
+        else:
+            # el capital es infinito y se puede apostar segun el metodo
+            apuesta = self.monto_prox_apuesta
+
+        if (self.gana_apuesta(num)):
+            self.capital -= apuesta
+            if (self.monto_prox_apuesta > apuesta_minima):
+                # se reduce el monto a apostar la siguiente ronda siempre que no sea menor que la minima
+                self.monto_prox_apuesta -= 1
+            self.apostar()  # se cambia el elemento a apostar
+        else:
+            self.capital -= apuesta
+            self.monto_prox_apuesta += 1
+
+
+class JugadorDalembert2(Jugador):
+    """Jugadores que siguen metodo Dalembert apostando por una columna."""
+    cols = ([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34],
+            [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
+            [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36])
+
+    def apostar(self) -> None:
+        self.columna_apuesta = randint(0, 2)
+
+    def __init__(self, capital: float = 0, apuesta_ini: float = apuesta_minima, cap_acotado: bool = False) -> None:
+        """La apuesta inicial es por defecto la minima"""
+        super().__init__(capital, apuesta_ini, cap_acotado)
+        self.monto_prox_apuesta = apuesta_minima
+        self.apostar()
+
+    def gana_apuesta(self, num: int) -> bool:
+        result = num in self.cols[self.columna_apuesta]
+        if (result):
+            self.victorias += 1
+        return result
 
     def jugar(self, num: int) -> None:
         if (self.cap_acotado):

@@ -1,4 +1,4 @@
-from clases import Jugador, randint, JugadorMG, JugadorParoli, JugadorColumnas, JugadorDalembert, negros, rojos
+from clases import Jugador, randint, JugadorMG, JugadorParoli, JugadorColumnas, JugadorDalembert, negros, rojos, JugadorDalembert2
 
 from matplotlib import pyplot as plt
 plt.style.use('ggplot')
@@ -123,10 +123,10 @@ def ejecutar(clase: Jugador, metodo: str, capital_acotado: bool = False):
     graficoDineroTiradasMultiples(resultados, capAcotado, c, metodo)
 
 
-ejecutar(clase=JugadorMG, metodo="Martingala - Sin restricciones de capital",
-         capital_acotado=False)
-ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado",
-         capital_acotado=True)
+# ejecutar(clase=JugadorMG, metodo="Martingala - Sin restricciones de capital",
+#          capital_acotado=False)
+# ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado",
+#          capital_acotado=True)
 
 # ejecutar(clase=JugadorParoli,
 #          metodo="Paroli - Sin restricciones de capital", capital_acotado=False)
@@ -142,3 +142,8 @@ ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado",
 #          metodo="Dalembert - Sin restricciones de capital", capital_acotado=False)
 # ejecutar(clase=JugadorDalembert,
 #          metodo="Dalembert - Con capital acotado", capital_acotado=True)
+
+ejecutar(clase=JugadorDalembert2,
+         metodo="Dalembert(columnas) - Sin restricciones de capital", capital_acotado=False)
+ejecutar(clase=JugadorDalembert2,
+         metodo="Dalembert(columnas) - Con capital acotado", capital_acotado=True)
