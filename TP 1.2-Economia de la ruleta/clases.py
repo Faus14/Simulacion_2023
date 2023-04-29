@@ -152,18 +152,18 @@ class JugadorColumnas(Jugador):
                 # cuando no se pueden cubrir todas las columnas no se apuesta
                 return
         if num in JugadorColumnas.cols[idxmax]:
-            self.capital += self.maxima*3
+            self.capital += self.maxima*2
             self.victorias += 1
         else:
             self.capital -= self.maxima
 
         if num in JugadorColumnas.cols[idxmed]:
-            self.capital += self.media*3
+            self.capital += self.media*2
         else:
             self.capital -= self.media
 
         if num in JugadorColumnas.cols[idxmin]:
-            self.capital += self.minima*3
+            self.capital += self.minima*2
         else:
             self.capital -= self.minima
 
@@ -196,7 +196,7 @@ class JugadorDalembert(Jugador):
             apuesta = self.monto_prox_apuesta
 
         if (self.gana_apuesta(num)):
-            self.capital -= apuesta
+            self.capital += apuesta
             if (self.monto_prox_apuesta > apuesta_minima):
                 # se reduce el monto a apostar la siguiente ronda siempre que no sea menor que la minima
                 self.monto_prox_apuesta -= 1
@@ -240,7 +240,7 @@ class JugadorDalembert2(Jugador):
             apuesta = self.monto_prox_apuesta
 
         if (self.gana_apuesta(num)):
-            self.capital -= apuesta
+            self.capital += apuesta*2
             if (self.monto_prox_apuesta > apuesta_minima):
                 # se reduce el monto a apostar la siguiente ronda siempre que no sea menor que la minima
                 self.monto_prox_apuesta -= 1
