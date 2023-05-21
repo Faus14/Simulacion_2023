@@ -59,9 +59,11 @@ def graficoDineroTiradasMultiples(resultados: list, capAcotado: float, corridas:
 def graficaFrecFavorable(frecuencias: list, title1: str) -> None:
     plt.title(
         f"Frecuencia relativa de obtener \n  una apuesta favorable segun 'n'\n  {title1}")
-    plt.bar(range(0, len(frecuencias)), frecuencias)
+    plt.bar(range(0, len(frecuencias)), frecuencias,
+            width=1, edgecolor="white", linewidth=1, align='edge')
     plt.ylabel('Frecuencia relativa')
-    plt.ylim(0, max(frecuencias))
+    plt.ylim(0, 0.3)
+    plt.xlim(xmin=0, xmax=18)
     plt.xlabel('Cantidad de tiradas "n"')
     plt.xticks()
     plt.yticks()
@@ -76,7 +78,7 @@ def tirada() -> int:
 valorApuesta = 1  # Valor de la apuesta
 capAcotado = 140  # Capital acotado
 
-t = 50  # número de tiradas
+t = 255  # número de tiradas
 c = 10  # número de corridas
 
 
@@ -123,10 +125,10 @@ def ejecutar(clase: Jugador, metodo: str, capital_acotado: bool = False):
     graficoDineroTiradasMultiples(resultados, capAcotado, c, metodo)
 
 
-# ejecutar(clase=JugadorMG, metodo="Martingala - Sin restricciones de capital",
-#          capital_acotado=False)
-# ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado",
-#          capital_acotado=True)
+ejecutar(clase=JugadorMG, metodo="Martingala - Sin restricciones de capital",
+         capital_acotado=False)
+ejecutar(clase=JugadorMG, metodo="Martingala - Con capital acotado",
+         capital_acotado=True)
 
 # ejecutar(clase=JugadorParoli,
 #          metodo="Paroli - Sin restricciones de capital", capital_acotado=False)
@@ -143,7 +145,7 @@ def ejecutar(clase: Jugador, metodo: str, capital_acotado: bool = False):
 # ejecutar(clase=JugadorDalembert,
 #          metodo="Dalembert - Con capital acotado", capital_acotado=True)
 
-ejecutar(clase=JugadorDalembert2,
-         metodo="Dalembert(columnas) - Sin restricciones de capital", capital_acotado=False)
-ejecutar(clase=JugadorDalembert2,
-         metodo="Dalembert(columnas) - Con capital acotado", capital_acotado=True)
+# ejecutar(clase=JugadorDalembert2,
+#          metodo="Dalembert(columnas) - Sin restricciones de capital", capital_acotado=False)
+# ejecutar(clase=JugadorDalembert2,
+#          metodo="Dalembert(columnas) - Con capital acotado", capital_acotado=True)

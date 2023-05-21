@@ -85,6 +85,7 @@ class JugadorMG(Jugador):
             if self.gana_apuesta(num):
                 self.capital += self.monto_prox_apuesta
                 self.juegos_perdidos = 0  # se reinicia el martingala
+                self.monto_prox_apuesta = self.apuesta_0
                 self.apostar()  # se cambia el elemento a apostar
             else:
                 self.capital -= self.monto_prox_apuesta
