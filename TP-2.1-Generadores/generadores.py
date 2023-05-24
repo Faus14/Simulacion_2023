@@ -1,8 +1,11 @@
+"""RNG algorithms"""
+
 #############################################
 #                                           #
 # ALGORITMO DE CUADRADOS MEDIOS             #
 #                                           #
 #############################################
+
 
 def AlgorithmMiddleSquare(seed: int, n: int) -> list:
     """seed: int || seed should be greater than 999
@@ -33,6 +36,7 @@ def AlgorithmMiddleSquare(seed: int, n: int) -> list:
 # ALGORITMO DE PRODUCTOS MEDIOS             #
 #                                           #
 #############################################
+
 
 def AlgorithmMiddleProduct(seed1: int, seed2: int, n: int) -> list:
     """seed1: int || seed1 should be greater than 999
@@ -66,6 +70,7 @@ def AlgorithmMiddleProduct(seed1: int, seed2: int, n: int) -> list:
 #                                           #
 #############################################
 
+
 def AlgorithmConstMultiplier(seed: int, multplier: int, n: int) -> list:
     """seed: int || seed should be greater than 999
     multiplier:int || multiplier should be greater than 999
@@ -98,9 +103,36 @@ def AlgorithmConstMultiplier(seed: int, multplier: int, n: int) -> list:
 #                                           #
 #############################################
 
-def AlgorithmGLC(a: int, x: int, c: int, m: int) -> list:
+
+def AlgorithmLGC(a: int, x: int, c: int, m: int) -> list:
     """a:int || a is multiplier
     x:int || x is seed
     c:int || c is increment
     m:int || m is max cycle length"""
-    pass
+    r = []
+    for i in range(m):
+        x = ((a*x)+c) % m
+        r_i = x/(m-1)
+        r_i = float('%.6f' % r_i)  # 6 digits of significance
+        r.append(r_i)
+    return r
+
+
+def SchrageLGC(a: int, x: int, m: int) -> list:
+    """Schrage method's is an alternative way to create a LGC
+    where c=0 and m is prime
+    a:int || a is multiplier
+    x:int || x is seed
+    c:int || c is increment
+    m:int || m is max cycle length"""
+    r = []
+    Q = m//a
+    R = m % a
+    for i in range(m):
+        g = a*(x % Q)-R*(x//Q)
+        h = (x // Q)-((a*x)//m)
+        x = g+m*h
+        r_i = x/(m-1)
+        r_i = float('%.6f' % r_i)  # 6 digits of significance
+        r.append(r_i)
+    return r
