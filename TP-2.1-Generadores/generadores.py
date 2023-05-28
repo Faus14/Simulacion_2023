@@ -8,8 +8,13 @@
 
 
 def AlgorithmMiddleSquare(seed: int, n: int) -> list:
-    """seed: int || seed should be greater than 999
-    n: int || n is cycle length"""
+    """# Middle square RNG
+    ## Non linear RNG
+    ## Inputs
+    seed: int || seed should be greater than 999
+    n: int || cycle length
+    ## Output
+    list || n sized random number list"""
     r_i = []
     X_n = seed
     D = len(str(seed))
@@ -39,10 +44,15 @@ def AlgorithmMiddleSquare(seed: int, n: int) -> list:
 
 
 def AlgorithmMiddleProduct(seed1: int, seed2: int, n: int) -> list:
-    """seed1: int || seed1 should be greater than 999
+    """# Middle product RNG 
+    ## Non linear RNG
+    ## Inputs
+    seed1: int || seed1 should be greater than 999
     seed2: int || seed2 should be greater than 999
     seed1, seed2: should have the same number of digits
-    n: int || n is cycle length"""
+    n: int || cycle length
+    ## Output
+    list || n sized random number list"""
     r_i = []
     X_n, X_n2 = seed1, seed2
     D = len(str(seed1))
@@ -72,10 +82,15 @@ def AlgorithmMiddleProduct(seed1: int, seed2: int, n: int) -> list:
 
 
 def AlgorithmConstMultiplier(seed: int, multplier: int, n: int) -> list:
-    """seed: int || seed should be greater than 999
+    """# Middle Constant Multiplier RNG
+    ## Non linear RNG
+    ## Inputs
+    seed: int || seed should be greater than 999
     multiplier:int || multiplier should be greater than 999
     seed, multiplier: should have the same number of digits
-    n: int || n is cycle length"""
+    n: int || cycle length
+    ## Output
+    list || n sized random number list"""
     r_i = []
     X_n, A = seed, multplier
     D = len(str(seed))
@@ -104,11 +119,19 @@ def AlgorithmConstMultiplier(seed: int, multplier: int, n: int) -> list:
 #############################################
 
 
-def AlgorithmLGC(a: int, x: int, c: int, m: int) -> list:
-    """a:int || a is multiplier
-    x:int || x is seed
-    c:int || c is increment
-    m:int || m is max cycle length"""
+def AlgorithmLCG(a: int, x: int, c: int, m: int) -> list:
+    """# Linear congruential generator 
+    ## Linear RNG
+    Common algorithm
+    ## Inputs
+    a:int || multiplier
+    x:int || seed
+    c:int || increment
+    m:int || max cycle length
+    ## Output
+    list || m sized random number list. 
+
+    LGC RNG could repeat numbers in a cycle acording to parameters"""
     r = []
     for i in range(m):
         x = ((a*x)+c) % m
@@ -118,13 +141,42 @@ def AlgorithmLGC(a: int, x: int, c: int, m: int) -> list:
     return r
 
 
+def AlgorithmLCG2(a: int, X_0: int, c: int, m: int) -> list:
+    """# Linear congruential generator 
+    ## Linear RNG
+    Alternative algorithm
+    ## Inputs
+    a:int || multiplier
+    x:int || seed
+    c:int || increment
+    m:int || max cycle length
+    ## Output
+    list || m sized random number list. 
+
+    LGC RNG could repeat numbers in a cycle acording to parameters"""
+    r = []
+    for i in range(1, m+1):
+        x = (((a**i)*X_0)+c*(a**i-1)/(a-1)) % m
+        r_i = x/(m-1)
+        r_i = float('%.6f' % r_i)  # 6 digits of significance
+        r.append(r_i)
+    return r
+
+
 def SchrageLGC(a: int, x: int, m: int) -> list:
-    """Schrage method's is an alternative way to create a LGC
-    where c=0 and m is prime
-    a:int || a is multiplier
-    x:int || x is seed
-    c:int || c is increment
-    m:int || m is max cycle length"""
+    """# Scharge's linear congruential generator
+    ## Linear RNG
+    Schrage method's is an alternative way to generate random numbers,
+
+    and its outputs are similar to a LCG where c=0 if m is prime
+    ## Inputs
+    a:int || multiplier
+    x:int || seed
+    m:int || max cycle length
+    ## Output
+    list || m sized random number list. 
+
+    Similar to LGC RNG, could repeat numbers in a cycle acording to parameters"""
     r = []
     Q = m//a
     R = m % a
