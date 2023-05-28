@@ -28,7 +28,7 @@ def SaveHist(rn: list, rn_name: str, params: dict) -> None:
 
 
 IC = 0.975
-ALPHA = 0.05
+ALPHA = 0.025
 DoF = 9
 random.seed(53)
 

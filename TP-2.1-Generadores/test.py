@@ -61,7 +61,7 @@ def KolmogorovTest(sample: list, alpha: float) -> str:
     True: the sample pass the test, there is no evidence to reject null hypothesis
     False: the sample does not pass the test, there is evidence to reject null hypothesis"""
 
-    sample.sort()  # Ordeno la lista de menor a mayor
+    sample = sorted(sample)  # Ordeno la lista de menor a mayor
     d_positivo = []  # array de los valores calculados para d positivo con la fórmula de KS
     d_negativo = []  # array de los valores calculados para d negativo con la fórmula de KS
     N = len(sample)
