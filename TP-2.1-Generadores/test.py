@@ -79,7 +79,7 @@ def KolmogorovTest(sample: list, alpha: float) -> str:
     return dmaximo < k_tabla
 
 
-def AutocorrelationTest(sample: list, alpha: float) -> float:
+def AutocorrelationTest(sample: list) -> float:
     """# Autocorrelation Test
     en: Autocorrelation test
     es: Test de autocorrelacion
