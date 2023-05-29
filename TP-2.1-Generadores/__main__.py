@@ -30,41 +30,41 @@ def SaveHist(rn: list, rn_name: str, params: dict) -> None:
 IC = 0.95
 ALPHA = 0.5
 DoF = 19
-random.seed(888)
+random.seed(53)
 
 start = perf_counter()
-RNGPY = [random.random() for i in range(131100)]
+RNGPY = [random.random() for i in range(10000)]
 end = perf_counter()-start
-print(f"Performance RNGPY: t={end} t/n={end/131100}")
+print(f"Performance RNGPY: t={end} t/n={end/10000}")
 
 # Non LGC Random Number Generators
 start = perf_counter()
-CM = AlgorithmConstMultiplier(seed=793682, multplier=598123, n=131100)
+CM = AlgorithmConstMultiplier(seed=793682, multplier=598123, n=10000)
 end = perf_counter()-start
-print(f"Performance Const: t={end} t/n={end/131100}")
+print(f"Performance Const: t={end} t/n={end/10000}")
 
 start = perf_counter()
-MS = AlgorithmMiddleSquare(seed=593054, n=131100)
+MS = AlgorithmMiddleSquare(seed=593054, n=10000)
 end = perf_counter()-start
-print(f"Performance Square: t={end} t/n={end/131100}")
+print(f"Performance Square: t={end} t/n={end/10000}")
 
 start = perf_counter()
-MP = AlgorithmMiddleProduct(seed1=524288, seed2=339475, n=131100)
+MP = AlgorithmMiddleProduct(seed1=524288, seed2=339475, n=10000)
 end = perf_counter()-start
-print(f"Performance Prod: t={end} t/n={end/131100}")
+print(f"Performance Prod: t={end} t/n={end/10000}")
 
 # LGC Random Number Generators
 
 # Family 1: c=0, m is prime
 
-mersenne = (2**17)-1  # =8191
+mersenne = (2**13)-1  # =8191
 start = perf_counter()
-LGC1 = AlgorithmLCG(a=11547, x=12907, c=0, m=mersenne)
+LGC1 = AlgorithmLCG(a=7345, x=4698, c=0, m=mersenne)
 end = perf_counter()-start
 print(f"Performance LGC1: t={end} t/n={end/mersenne}")
 
 start = perf_counter()
-SCH = SchrageLGC(a=11547, x=12907, m=mersenne)
+SCH = SchrageLGC(a=7345, x=4698, m=mersenne)
 end = perf_counter()-start
 print(f"Performance Scharge: t={end} t/n={end/mersenne}")
 
@@ -78,15 +78,17 @@ print(f"Performance Scharge: t={end} t/n={end/mersenne}")
 
 # Family 2: c=0, m is 2**X
 start = perf_counter()
-LGC2 = AlgorithmLCG(a=8247, x=2023, c=0, m=2**17)
+# a congruente con 5 (mod 8) o 3 (mod 5)
+LGC2 = AlgorithmLCG(a=3333, x=8011, c=0, m=2**13)
 end = perf_counter()-start
-print(f"Performance LGC2: t={end} t/n={end/(2**17)}")
+print(f"Performance LGC2: t={end} t/n={end/(2**13)}")
 
 # Family 3: c!=0
 start = perf_counter()
-LGC3 = AlgorithmLCG(a=2**11-1, x=7693, c=1015, m=2**17)
+# a-1 divisible por 4 si m divisible por 4, m y c primos relativos
+LGC3 = AlgorithmLCG(a=4097, x=3333, c=3941, m=2**13)
 end = perf_counter()-start
-print(f"Performance LGC3: t={end} t/n={end/(2**17)}")
+print(f"Performance LGC3: t={end} t/n={end/(2**13)}")
 
 
 print("\nMultiplicador constante\n")
@@ -98,7 +100,7 @@ print(f"Scipy KS: {r}")
 print(f"Test de rachas: {RunsTest(CM,ALPHA)}")
 print(f"Autocorrelacion: {AutocorrelationTest(CM)}")
 SaveHist(CM, 'RNG de multiplicador constante', {
-         'Semilla': 793682, 'Multiplicador': 598123, 'N': 131100})
+         'Semilla': 793682, 'Multiplicador': 598123, 'N': 10000})
 
 print("\nCuadrados medios\n")
 print(f"Test Chicuadrado: {ChiSquareTest(MS,IC,DoF)}")
@@ -108,7 +110,7 @@ r = p > s
 print(f"Scipy KS:{r}")
 print(f"Test de rachas: {RunsTest(MS,ALPHA)}")
 print(f"Autocorrelacion: {AutocorrelationTest(MS)}")
-SaveHist(MS, 'RNG de cuadrados medios', {'Semilla': 593054, 'N': 131100})
+SaveHist(MS, 'RNG de cuadrados medios', {'Semilla': 593054, 'N': 10000})
 
 print("\nProductos medios\n")
 print(f"Test Chicuadrado: {ChiSquareTest(MP,IC,DoF)}")
@@ -119,7 +121,7 @@ print(f"Scipy KS:{r}")
 print(f"Test de rachas: {RunsTest(MP,ALPHA)}")
 print(f"Autocorrelacion: {AutocorrelationTest(MP)}")
 SaveHist(MP, 'RNG de productos medios', {
-         'Semilla 1': 524288, 'Semilla 2': 339475, 'N': 131100})
+         'Semilla 1': 524288, 'Semilla 2': 339475, 'N': 10000})
 
 print("\nLGC Family 1\n")
 print(f"Test Chicuadrado: {ChiSquareTest(LGC1,IC,DoF)}")
@@ -129,8 +131,8 @@ r = p > s
 print(f"Scipy KS:{r}")
 print(f"Test de rachas: {RunsTest(LGC1,ALPHA)}")
 print(f"Autocorrelacion: {AutocorrelationTest(LGC1)}")
-SaveHist(LGC1, 'GLC Familia 1', {'a': 11547,
-         'x': 12907, 'c': 0, 'm': mersenne})
+SaveHist(LGC1, 'GLC Familia 1', {'a': 7345,
+         'x': 4698, 'c': 0, 'm': mersenne})
 
 print("\nLGC Family 2\n")
 print(f"Test Chicuadrado: {ChiSquareTest(LGC2,IC,DoF)}")
@@ -140,7 +142,7 @@ r = p > s
 print(f"Scipy KS: {r}")
 print(f"Test de rachas: {RunsTest(LGC2,ALPHA)}")
 print(f"Autocorrelacion: {AutocorrelationTest(LGC2)}")
-SaveHist(LGC2, 'GLC Familia 2', {'a': 8247, 'x': 2023, 'c': 0, 'm': 2**17})
+SaveHist(LGC2, 'GLC Familia 2', {'a': 3333, 'x': 8011, 'c': 0, 'm': 2**13})
 
 print("\nLGC Family 3\n")
 print(f"Test Chicuadrado: {ChiSquareTest(LGC3,IC,DoF)}")
@@ -150,8 +152,7 @@ r = p > s
 print(f"Scipy KS: {r}")
 print(f"Test de rachas: {RunsTest(LGC3,ALPHA)}")
 print(f"Autocorrelacion: {AutocorrelationTest(LGC3)}")
-SaveHist(LGC3, 'GLC Familia 3', {'a': 2**11 -
-         1, 'x': 7693, 'c': 1015, 'm': 2**17})
+SaveHist(LGC3, 'GLC Familia 3', {'a': 4097, 'x': 3333, 'c': 3941, 'm': 2**13})
 
 print("\nScharge\n")
 print(f"Test Chicuadrado: {ChiSquareTest(SCH,IC,DoF)}")

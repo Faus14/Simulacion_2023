@@ -5,7 +5,7 @@ from scipy.stats import ksone, norm, chi2
 from math import sqrt, trunc
 import matplotlib.pyplot as plt
 
-"""Code from following functions are based on: https://github.com/nicolasf96/practica-simulacion-2022/blob/main/Generators/tests.py
+"""Code from following functions are based on(but modified): https://github.com/nicolasf96/practica-simulacion-2022/blob/main/Generators/tests.py
 https://github.com/nicolasf96/practica-simulacion-2022/blob/d2826666dce093daf6146f4bc6396f2adb049c21/Generators/tests.py
 Authored by: Biscaldi-Iv, nicolasf96"""
 
