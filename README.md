@@ -2,12 +2,16 @@
 
 ## 1.1 Juego de la ruleta
 
-Informe (Ruleta.pdf)
+![Ruleta](Ruleta.pdf)
 
 ## 1.2 Economia de la ruleta
 
-Informe (EconRuleta.pdf)
+![EconRuleta](EconRuleta.pdf)
 
 ## 2.1 Generadores de numeros aleatorios
 
-Informe (Generadores.pdf)
+![Generadores](Generadores.pdf)
+
+## 2.2 Generadores distribuidos
+
+![GenDistribuido](GenDistribuido.pdf)
