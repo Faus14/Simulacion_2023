@@ -1,17 +1,17 @@
-# Simulacion_2023
+# Simulacion 2023
 
 ## 1.1 Juego de la ruleta
 
-![Ruleta](Ruleta.pdf)
+[Informe sobre el proceso estocastico de jugar a la ruleta](Ruleta.pdf)
 
 ## 1.2 Economia de la ruleta
 
-![EconRuleta](EconRuleta.pdf)
+[Informe sobre la economia de la ruleta](EconRuleta.pdf)
 
 ## 2.1 Generadores de numeros aleatorios
 
-![Generadores](Generadores.pdf)
+[Informe sobre generadores de numeros aleatorios](Generadores.pdf)
 
 ## 2.2 Generadores distribuidos
 
-![GenDistribuido](GenDistribuido.pdf)
+[Informe sobre generadores distribuido](GenDistribuido.pdf)

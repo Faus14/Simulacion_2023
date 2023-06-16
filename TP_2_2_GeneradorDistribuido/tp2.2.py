@@ -1,5 +1,5 @@
-from MTransformada import UniformeT, ExponencialT, NormalT
-from MRechazo import UniformeR, GammaR, EmpiricaR, ExponenecialR, NormalR, BinomialR, PascalR, PoissonR, HipergeometricaR
+from Metodo_Transformada import UniformeT, ExponencialT, NormalT
+from Metodo_Rechazo import UniformeR, GammaR, EmpiricaR, ExponenecialR, NormalR, BinomialR, PascalR, PoissonR, HipergeometricaR
 from scipy.stats import uniform, norm, gamma, expon, binom, poisson, nbinom, geom
 from matplotlib import pyplot as plt
 import numpy as np
