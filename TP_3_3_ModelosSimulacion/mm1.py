@@ -51,14 +51,14 @@ class MM1:
                     continue
                 else:
                     self.events.append("arrival")
-                    if self.inQueue > 0:  # at least one user in queue
+                    if not self.serverIsFree:  # server is not free
                         self.inQueue += 1  # new user gets into queue
-                    else:  # no users in queue
+                    else:  # server is free
                         self.serverIsFree = False  # new user gets direct to server
             self.inQat.append((self.inQueue, self.time))
 
 
-m = MM1(5, 6, 5)
+m = MM1(1, 1.25, 5)
 m.Simulate(200)
 print(m.events)
 print(m.inQat)
